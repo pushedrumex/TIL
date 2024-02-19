@@ -1,0 +1,86 @@
+## Redis
+
+key-value 구조의 in-memory 데이터 저장소
+
+## Redis 데이터 타입
+
+- Strings: 가장 기본적인 데이터 타입으로, set 커멘드를 통해 데이터를 저장
+- Bitmaps: 비트 단위의 데이터 타입으로 비트 단위의 연산 가능
+- Lists: 데이터를 순서대로 저장(큐로 사용하기 적절)
+- Hashes: 하나의 키 안에 여러개의 field 와 value 쌍으로 데이터를 저장
+- Sets: 중복되지 않는 문자열의 집합
+- Sorted Sets: 중복되지 않는 값을 저장하되, 모든 값을 score 기준을 정렬됨(score 가 같은 경우 사전 순으로 정렬)
+- HyperLogLogs: 중복되지 않는 데이터를 카운트할 때 사용
+- Streams: 로그를 저장하기 좋은 자료구조
+
+## Redis의 데이터를 영구 저장 (AOF, RDB)
+
+redis의 in-memory 스토어 특징
+
+1. 서버 재시작 시 모든 데이터 유실
+2. 복제 기능을 사용해도 사람의 실수 발생 시 데이터 복원 불가
+3. Redis 를 캐시 이외의 용도로 사용한다면 적절한 데이터 백업이 필요
+
+### AOF
+
+데이터를 변경하는 커멘드가 들어오면 커멘트를 모두 저장
+
+- 자동 : redis.conf 파일에서 auto-aof-rewrite-percentage 옵션 (크기 기준)
+- 수동 : bgrewriteaof 커멘드를 이용해 cli 창에서 수동으로 AOF 파일 재작성
+
+### RDB
+
+저장 당시에 메모리에 존재하는 데이터 그대로를 파일로 저장
+
+- 자동 : redis.conf 파일에서 save 옵션 (시간 기준)
+
+  ex) save 900 1 900초동안 1개 이상의 키가 변경되었다면 RDB 파일을 재작성
+
+- 수동 : bgsave 커멘드를 이용해서 cli 창에서 수동으로 rdb 파일에 저장
+    - save 커멘드는 절대 사용 X
+
+### AOF VS RDB
+
+- 백업은 필요하지만 어느 정도의 데이터 손실이 발생해도 괜찮은 경우
+    - RDB 단독 사용
+    - redis.conf 파일에서 SAVE 옵션을 적절히 사용
+- 장애 상황 직전까지의 모든 데이터가 보장되어야할 경우
+    - AOF 사용
+    - APPENDFSYNC 옵션이 everysec인 경우 최대 1초 사이의 데이터 유실 가능
+- 제일 강력한 내구성이 피료한 경우
+    - RDB & AOF 동시 사용
+
+## Redis 아키텍처 (Replication, Sentinel, Cluster)
+
+### Replication
+
+단순한 복제 연결
+
+- replicaof 커맨드를 이용해 간단하게 복제 연결
+- 비동기식 복제
+- HA(고가용, 자동으로 faliover) 기능이 없으므로 Master 에 장애 상황 발생 시 수동 복구
+    - replicaof on one
+    - 어플리케이션에서 연결 정보 변경
+
+### Sentinel
+
+자동 페일 오버 가능한 HA 구성
+
+- sentinel 노드(모니터링 서버)가 다른 노드(db 서버) 감시
+- 마스터가 비정상 상태일 때 자동으로 페일 오버
+- 연결 정보 변경 필요 없음
+
+  어플리케이션은 sentinel 노드만 알고 있으면 됨
+
+- sentinel 노드는 항상 3대 이상의 홀수로 존재
+
+  과반수 이상의 sentinel이 동의해야 페일오버 진행
+
+
+### Cluster
+
+스케일 아웃과 HA 구성
+
+- 키를 여러 노드에 자동으로 분할해서 저장(샤딩)
+- 모든 노드가 서로를 감시하여 마스터 비정상일 때 자동 페일오버
+- 최소 3대의 마스터 노드가 필요
