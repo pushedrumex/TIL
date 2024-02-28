@@ -5,11 +5,11 @@
   - 문자열을 캐싱하여 메모리 공간 절약
   - thread-safe
   - 보안 측면: 주소값의 문자열이 변경이 가능하다면 보안에 취약
-- JVM 은 String Constanct Pool 이라는 공간에 문자열들을 상수화하여 다른 객체들과 공유
+- JVM 은 String Constant Pool 이라는 공간에 문자열들을 상수화하여 다른 객체들과 공유
 
 ## new String() vs ""
 - new String(): 새로운 객체 생성하고 Heap 영역에 저장
-- "": String Constance Pool 의 리터럴 문자열을 사용
+- "": String Constant Pool 의 리터럴 문자열을 사용
 
 ## String vs StringBuffer vs StringBuilder
 - String: 불변 객체, 문자열 변경 시 새로운 객체 생성
