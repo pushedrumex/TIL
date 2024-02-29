@@ -17,10 +17,26 @@ JVM 은 크게 클래스 로더, 실행 엔진, 런타임 데이터 영역으로
 
 - 런타임 데이터 영역
   - 프로그램을 수행하기 위해 운영 체제에서 할당 받은 메모리 공간
-  - `Method Area`, `Heap`, `Stack` 등으로 구성
-  - Method Area(Static Area): 클래스 로더에 의해 로드된 클래스 정보, 메소드, 필드, 상수, static 변수 등이 저장
-  - Heap: new 키워드로 생성된 객체, 배열 등이 저장
-  - Stack: 지역 변수, 파라미터, 리턴 값, 연산 중 발생하는 임시 데이터 등이 저장
+  - `Method Area`, `Heap`, `Stack`, `PC register`, `Native Method Stack` 등으로 구성
+  - Method Area(Static Area)
+    - 클래스 로더에 의해 로드된 클래스 정보, 메소드 정보, static 변수 등이 저장
+    - 모든 스레드가 공유
+  - Heap
+    - new 키워드로 생성된 인스턴스, 배열 등이 저장
+    - 객체가 더이상 쓰이지 않을 경우 GC 에 의해 삭제
+    - 모든 스레드가 공유
+  - Stack
+    - 지역 변수, 참조 변수, 파라미터, 리턴 값, 연산 중 발생하는 임시 데이터 등이 저장
+    - 메소드가 호출 될 때 마다 각각의 스택 프레임 생성
+    - 메소드가 종료될 때마다 삭제
+    - 각 스레드 별로 생성
+  - PC register
+    - JVM 이 수행할 명령어의 주소를 저장
+    - 스레드가 시작될 때 생성
+    - 각 스레드별로 생성
+  - Native Method Stack
+    - 자바 외의 언어로 작성된 네이티브 코드를 위한 스택
+    - 각 스레드별로 생성
 
 ## JRE
 - Java Runtime Environment
