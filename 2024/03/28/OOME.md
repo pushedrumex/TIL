@@ -14,4 +14,4 @@ while (true) {
 }
 ```
 
-#### [실습 코드 저장소](https://github.com/pushedrumex/Laboratory/tree/main/exception/oome)
+#### [실습 코드 저장소](https://github.com/pushedrumex-labs/java/blob/main/src/error/OutOfMemory.java)

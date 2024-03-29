@@ -13,4 +13,4 @@ private static void recursive() {
 }
 ```
 
-#### [실습 코드 저장소](https://github.com/pushedrumex/Laboratory/tree/main/exception/sofe)
+#### [실습 코드 저장소](https://github.com/pushedrumex-labs/java/blob/main/src/error/StackOverflow.java)
