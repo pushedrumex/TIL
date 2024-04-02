@@ -18,6 +18,7 @@
 | parallel stream List  | 204        |
 
 - for ~= parallel stream > stream
+- Collection 은 Heap 영역을 참조하기 때문에 primitive 보다 느림
 
 #### [실습 코드 저장소](https://github.com/pushedrumex-labs/java/blob/main/src/for_stream/ForStream.java)
 #### [학습 정리](https://github.com/pushedrumex/TIL/blob/main/2024/03/06/stream.md)
