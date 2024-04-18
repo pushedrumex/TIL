@@ -30,15 +30,15 @@ java.util.function 패키지에 여러 함수형 인터페이스가 제공됨
 ```java
 @FunctionalInterface
 public interface Predicate<T> {
-    boolean test(T t);
+    boolean java.test.Test(T t);
 }
 ```
 - T 타입을 받아서 boolean을 리턴하는 함수형 인터페이스
 - 주로 조건을 검사하는데 사용
 ```java
 Predicate<Integer> isPositive = i -> i > 0;
-isPositive.test(5); // true
-isPositive.test(-5); // false
+isPositive.java.test.Test(5); // true
+isPositive.java.test.Test(-5); // false
 ```
 
 2. Consumer<T>
