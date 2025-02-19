@@ -17,6 +17,7 @@
 - HashMap
   - key, value 쌍을 저장하는 자료구조
   - key 를 해싱하여 해시코드를 생성하고, 해시코드를 배열의 각 요소인 버킷의 인덱스로 사용
+  - 해시코드가 충돌이 날 경우 LinkedList로 연결 -> hashcode()로 비교 후 동일하다면 equals()를 사용하여 비교. 따라서 hashcode()와 equals()를 함께 오버라이딩 해야함
 
 - HashTable
   - HashMap 과 동일한 내부구조를 갖음
