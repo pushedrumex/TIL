@@ -11,7 +11,7 @@ def bubble_sort(arr):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
 ```
-- 시간 복잡도: O(n^2)
+- O(n^2) / stable / in-place
 ex)
 1. 5, 8, 6, 4, 2, 1
 2. 5, 6, 4, 2, 1, 8
@@ -34,7 +34,7 @@ def insertion_sort(arr):
                 break
 
 ```
-- 시간 복잡도: O(n^2) (이미 정렬이 되어있다면 O(n))
+- O(n^2) (이미 정렬이 되어있다면 O(n)) / stable / in-place
 ex)
 1. 5, 8, 6, 4, 2, 1
 2. 5, 8, 6, 4, 2, 1
@@ -55,7 +55,7 @@ def selection_sort(arr):
                 min_idx = j
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 ```
-- 시간 복잡도: O(n^2)
+- O(n^2) / stable / in-place
 ex)
 1. 5, 8, 6, 4, 2, 1
 2. 1, 8, 6, 4, 2, 5
@@ -83,7 +83,7 @@ def quick_sort(arr):
             equal.append(i)
     return quick_sort(left) + equal + quick_sort(right)
 ```
-- 시간 복잡도: O(nlogn)
+- O(nlogn) / stable / not in place
   파니셔닝 O(n) * 분할 O(logn)
 - 최악의 경우: O(n^2)
   계속해서 최대값이나 최소값을 pivot 으로 선택하는 경우 배열의 길이가 1이 될 때까지 n-1번을 분할해야함
@@ -93,6 +93,31 @@ ex)
 3. [1] + [2] + [4] + [5, 6] + [8]
 4. [1] + [2] + [4] + [5] + [6] + [8]
 5. [1, 2, 4, 5, 6, 8]
+
+### not stable / in-place 버전
+```python
+def quick_sort(arr, left, right):
+    if left < right:
+        pivot_idx = partition(arr, left, right)
+        quick_sort(arr, left, pivot_idx - 1)
+        quick_sort(arr, pivot_idx + 1, right)
+
+def partition(arr, left, right):
+    pivot_idx = left # 피벗의 인덱스를 제일 왼쪽 값으로 설정
+    pivot = arr[left]
+    
+    arr[pivot_idx], arr[right] = arr[right], arr[pivot_idx]
+    
+    i = left
+    for j in range(left, right):
+        if pivot > arr[j]:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    
+    arr[i], arr[right] = arr[right], arr[i]
+
+    return i
+```
 ## 병합 정렬
 - 재귀를 사용해 정렬하는 알고리즘
 - 원소가 하나만 남을 때까지 계속해서 분할한 다음 대소관계를 고려하여 재배열하여 병합
