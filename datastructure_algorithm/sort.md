@@ -127,20 +127,20 @@ def merge_sort(arr):
     	return arr
         
     mid = len(arr) // 2
-    left = merge_sort(array[:mid])
-    right = merge_sort(array[mid:])
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
     
     merged_array = []
     l, r = 0, 0
     while l < len(left) and r < len(right):
-    	if left[l] < right[r]:
+    	if left[l] <= right[r]:
         	merged_array.append(left[l])
         	l += 1
         else:
-            merged_array.append(right[h])
-        	h += 1
-    merged_array += low[l:]
-    merged_array += high[h:]
+            merged_array.append(right[r])
+        	r += 1
+    merged_array += left[l:]
+    merged_array += right[r:]
     
     return merged_array
 ```
